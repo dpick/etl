@@ -1,3 +1,3 @@
 defmodule Etl.Config do
-  defstruct [:source, :type, :destination]
+  defstruct [:source, :source_type, :destination_type, :destination, :connection, :schema]
 end

@@ -11,4 +11,12 @@ defmodule Etl.DataSink do
     Writes data to the sink.
   """
   @callback push(data, config, table) :: any
+
+  def output_path(config, table) do
+    if String.ends_with?(config.destination, "/") do
+      config.destination <> table <> ".csv"
+    else
+      config.destination <> "/" <> table <> ".csv"
+    end
+  end
 end

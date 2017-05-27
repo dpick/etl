@@ -12,6 +12,6 @@ defmodule Etl.FileSource do
   end
 
   def pull(_, config) do
-    File.stream!(config.source)
+    File.stream!(config.source) |> CSV.decode
   end
 end

@@ -29,6 +29,9 @@ defmodule Etl.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:postgrex, ">= 0.0.0"}]
+    [
+      {:postgrex, ">= 0.0.0"},
+      {:csv, "~> 1.4.2"}
+    ]
   end
 end

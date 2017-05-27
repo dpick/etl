@@ -4,12 +4,14 @@ defmodule Etl do
   """
 
   def run(config) do
-    tables = config |> Etl.FileSource.tables
+    source = "Elixir.Etl.#{String.capitalize(config.source_type)}Source" |> String.to_atom
+    sink   = "Elixir.Etl.#{String.capitalize(config.destination_type)}Sink"   |> String.to_atom
+
+    tables = apply(source, :tables, [config])
 
     Enum.each(tables, fn(table) ->
-      table
-      |> Etl.FileSource.pull(config)
-      |> Etl.FileSink.push(config, table)
+      data = apply(source, :pull, [table, config])
+      apply(sink, :push, [data, config, table])
     end)
   end
 end
