@@ -3,11 +3,12 @@ defmodule Etl.DataSink do
   Specification of an etl data sink.
   """
 
-  @type location :: String
+  @type config :: Etl.Config
   @type data :: Stream
+  @type table :: String
 
   @doc """
     Writes data to the sink.
   """
-  @callback push(data, location) :: any
+  @callback push(data, config, table) :: any
 end

@@ -3,18 +3,28 @@ defmodule EtlTest do
   doctest Etl
 
   setup do
+    File.mkdir("test/output")
+
     on_exit fn ->
-      File.rm('test/fixtures/output.csv')
+      File.rm_rf("test/output")
     end
   end
 
   test "it copies a basic file" do
-    {:ok, input}  = File.read('test/fixtures/basic.csv')
+    Etl.run(
+      struct(
+        Etl.Config,
+        [
+          source: "test/fixtures/basic.csv",
+          destination: "test/output/",
+          type: "file",
+        ]
+      )
+    )
 
-    Etl.run('test/fixtures/basic.csv', 'test/fixtures/output.csv')
+    {:ok, input} = File.read("test/fixtures/basic.csv")
+    {:ok, output} = File.read("test/output/basic.csv")
 
-    {:ok, output} = File.read('test/fixtures/output.csv')
-
-    assert input == output
+    assert output == input
   end
 end

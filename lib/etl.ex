@@ -3,9 +3,13 @@ defmodule Etl do
   Documentation for Etl.
   """
 
-  def run(input_file, output_file) do
-    input_file
-    |> Etl.FileSource.pull
-    |> Etl.FileSink.push(output_file)
+  def run(config) do
+    tables = config |> Etl.FileSource.tables
+
+    Enum.each(tables, fn(table) ->
+      table
+      |> Etl.FileSource.pull(config)
+      |> Etl.FileSink.push(config, table)
+    end)
   end
 end

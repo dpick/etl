@@ -1,9 +1,7 @@
-defprotocol Etl.DataSource do
-  def empty?(data)
-end
+defmodule Etl.DataSource do
+  @type config :: Etl.Config
+  @type tables :: List
 
-defimpl Etl.DataSource, for: Etl.Config do
-  def data(%{source: %{type: :file}} = config) do
-    File.stream!(config[:source][:location])
-  end
+  @callback tables(config) :: any
+  @callback pull(tables, config) :: any
 end
