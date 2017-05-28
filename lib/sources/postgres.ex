@@ -16,4 +16,18 @@ defmodule Etl.PostgresSource do
 
     result.rows
   end
+
+  def table_schema(table, config) do
+    {:ok, pid} = Postgrex.start_link(config.connection)
+
+    query = """
+    SELECT column_name, data_type
+    FROM information_schema.columns WHERE table_name = '#{table}'
+    ORDER BY ordinal_position
+    """
+
+    result = Postgrex.query!(pid, query, [])
+
+    result.rows
+  end
 end

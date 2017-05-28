@@ -14,4 +14,7 @@ defmodule Etl.FileSource do
   def pull(_, config) do
     File.stream!(config.source) |> CSV.decode
   end
+
+  def table_schema(table, config) do
+  end
 end

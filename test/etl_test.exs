@@ -11,17 +11,9 @@ defmodule EtlTest do
   end
 
   test "it copies a basic file" do
-    Etl.run(
-      struct(
-        Etl.Config,
-        [
-          source: "test/fixtures/basic.csv",
-          destination: "test/output/",
-          source_type: "file",
-          destination_type: "file",
-        ]
-      )
-    )
+    config = Mix.Config.read!("test/configs/file_to_file.exs")[:etl]
+
+    Etl.run(struct(Etl.Config, config))
 
     {:ok, input} = File.read("test/fixtures/basic.csv")
     {:ok, output} = File.read("test/output/basic.csv")
@@ -36,22 +28,9 @@ defmodule EtlTest do
     Postgrex.query!(pid, "INSERT INTO test VALUES (1)", [])
     Postgrex.query!(pid, "INSERT INTO test VALUES (2)", [])
 
-    Etl.run(
-      struct(
-        Etl.Config,
-        [
-          source_type: "postgres",
-          destination_type: "file",
-          destination: "test/output",
-          schema: "public",
-          connection: [
-            hostname: "localhost",
-            database: "postgres",
-            username: "postgres"
-          ]
-        ]
-      )
-    )
+    config = Mix.Config.read!("test/configs/postgres_to_file.exs")[:etl]
+
+    Etl.run(struct(Etl.Config, config))
 
     {:ok, output} = File.read("test/output/test.csv")
 
