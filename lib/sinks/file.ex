@@ -6,4 +6,10 @@ defmodule Etl.FileSink do
 
     data |> CSV.encode |> Enum.each(&IO.write(file, &1))
   end
+
+  def table_schema(table, config) do
+  end
+
+  def recreate_schema(table, config, source_schema) do
+  end
 end

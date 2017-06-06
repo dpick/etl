@@ -4,7 +4,9 @@ defmodule Etl.Config do
     :source_adapter,
     :destination_adapter,
     :destination,
-    :connection,
-    :schema
+    :source_connection,
+    :destination_connection,
+    :source_schema,
+    :destination_schema
   ]
 end

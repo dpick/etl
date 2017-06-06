@@ -17,4 +17,7 @@ defmodule Etl.FileSource do
 
   def table_schema(table, config) do
   end
+
+  def recreate_schema(table, config) do
+  end
 end
