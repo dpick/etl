@@ -12,4 +12,12 @@ defmodule Etl.FileSink do
 
   def recreate_schema(table, config, source_schema) do
   end
+
+  def output_path(config, table) do
+    if String.ends_with?(config.destination, "/") do
+      config.destination <> table <> ".csv"
+    else
+      config.destination <> "/" <> table <> ".csv"
+    end
+  end
 end

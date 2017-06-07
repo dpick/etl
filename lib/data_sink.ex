@@ -14,12 +14,4 @@ defmodule Etl.DataSink do
   @callback push(data, config, table) :: any
   @callback table_schema(table, config) :: any
   @callback recreate_schema(table, config, source_schema) :: any
-
-  def output_path(config, table) do
-    if String.ends_with?(config.destination, "/") do
-      config.destination <> table <> ".csv"
-    else
-      config.destination <> "/" <> table <> ".csv"
-    end
-  end
 end
