@@ -23,6 +23,7 @@ defmodule Etl.PostgresSource do
     query = """
     SELECT column_name, data_type
     FROM information_schema.columns WHERE table_name = '#{table}'
+      AND table_schema = '#{config.source_schema}'
     ORDER BY ordinal_position
     """
 

@@ -25,7 +25,7 @@ defmodule Etl.PostgresSink do
   def recreate_schema(table, config, source_schema) do
     {:ok, pid} = Postgrex.start_link(config.destination_connection)
 
-    Postgrex.query!(pid, "DROP TABLE #{table}", [])
+    Postgrex.query!(pid, "DROP TABLE IF EXISTS #{table}", [])
     Postgrex.query!(pid, "CREATE SCHEMA IF NOT EXISTS #{config.destination_schema}", [])
     sql = generate_create_sql(table, source_schema, config.destination_schema)
     Postgrex.query!(pid, sql, [])
